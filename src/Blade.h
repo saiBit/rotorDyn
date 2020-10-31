@@ -16,10 +16,11 @@ private:
 public:
     static const int AEQUIDISTANT_DISCRETIZATION;
 
+    // TODO: Change this so that we can input a I that changes over the radius
     Blade(double radius, double head_radius);
 
 
-    int initNet(unsigned int numberOfElements, int discretizationMethod);
+    int initNet(unsigned int numberOfElements, int discretizationMethod, gsl_matrix *I);
 };
 
 

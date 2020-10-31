@@ -7,6 +7,10 @@
 
 int main() {
     Blade *b = new Blade(3.0, 0.2);
-    b->initNet(100, Blade::AEQUIDISTANT_DISCRETIZATION);
+    gsl_matrix *I = gsl_matrix_calloc(3, 3);
+    gsl_matrix_set(I, 0, 0, 1);
+    gsl_matrix_set(I, 1, 1, 1);
+    gsl_matrix_set(I, 2, 2, 1);
+    b->initNet(100, Blade::AEQUIDISTANT_DISCRETIZATION, I);
     return 0;
 }

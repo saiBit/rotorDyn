@@ -6,7 +6,7 @@
 
 const int Blade::AEQUIDISTANT_DISCRETIZATION = 0x01;
 
-int Blade::initNet(unsigned int numberOfElements, int discretizationMethod) {
+int Blade::initNet(unsigned int numberOfElements, int discretizationMethod, gsl_matrix *I) {
     // Blattradius ohne Rotorkopf
     double effective_radius = this->radius - this->head_radius;
     // Liste der Blattelemente initialisieren
@@ -27,7 +27,9 @@ int Blade::initNet(unsigned int numberOfElements, int discretizationMethod) {
                 gsl_vector_set(translation, 0, r_a - r_i);                // delta_u
                 gsl_vector_set(translation, 1, 0);                      // delta_v
                 gsl_vector_set(translation, 2, 0);                      // delta_w
-                BladeElement b = BladeElement(r_i, r, r_a, translation, 0);
+
+                BladeElement b = BladeElement(r_i, r, r_a, translation, 5, I);
+                // Van der Wall says flapping polynomial order has to be at least 5
                 this->bladeElements.push_back(b);
             }
 
