@@ -18,7 +18,7 @@ public:
 
     Blade(double radius);
 
-    int initNet(int numberOfElements, int discretizationMethod);
+    int initNet(unsigned int numberOfElements, int discretizationMethod);
 };
 
 

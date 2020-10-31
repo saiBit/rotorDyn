@@ -6,7 +6,7 @@
 
 const int Blade::AEQUIDISTANT_DISCRETIZATION = 0x01;
 
-int Blade::initNet(int numberOfElements, int discretizationMethod) {
+int Blade::initNet(unsigned int numberOfElements, int discretizationMethod) {
     // Liste der Blattelemente initialisieren
     printf("Initialisierung der Blattelemente, N = %u , R = %f m\n", numberOfElements, this->radius);
     this->bladeElements = {};
