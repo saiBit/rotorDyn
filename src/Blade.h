@@ -12,9 +12,13 @@ class Blade {
 private:
     double radius;
 
-    static int initNet(int a, int b);
-
     std::list<BladeElement> bladeElements;
+public:
+    static const int AEQUIDISTANT_DISCRETIZATION;
+
+    Blade(double radius);
+
+    int initNet(int numberOfElements, int discretizationMethod);
 };
 
 
