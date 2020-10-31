@@ -18,16 +18,16 @@ int Blade::initNet(unsigned int numberOfElements, int discretizationMethod) {
             printf("Aequidistante Diskretisierung.");
             // Durch Elemente iterieren, für jedes Element ein Blattelement generieren
             for (int i = 0; i < numberOfElements; i++) {
-                // Sonderfall des innersten Elementes, welches erst am Rotorkopf anfängt
-
-
                 double r_i = effective_radius * i / numberOfElements + this->head_radius;
                 double r_a = effective_radius * (i + 1) / numberOfElements + this->head_radius;
                 double r = (r_i + r_a) / 2;
 
                 gsl_vector *translation = gsl_vector_alloc(3);
                 gsl_vector_set_zero(translation);
-                BladeElement b = BladeElement(r_i, r, r_a, translation);
+                gsl_vector_set(translation, 0, r_a - r_i);                // delta_u
+                gsl_vector_set(translation, 1, 0);                      // delta_v
+                gsl_vector_set(translation, 2, 0);                      // delta_w
+                BladeElement b = BladeElement(r_i, r, r_a, translation, 0);
                 this->bladeElements.push_back(b);
             }
 
