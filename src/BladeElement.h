@@ -19,7 +19,7 @@ public:
 private:
     double radius_center, radius_inner, radius_outer;
 
-    double *flapping_polynomial;
+    double *flapping_polynomial;// describes the bending form, where (0) lies in the middle of the element
 
     gsl_vector *translation;    // in local coordinate system
 

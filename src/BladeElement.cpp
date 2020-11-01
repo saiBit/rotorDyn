@@ -15,6 +15,7 @@ BladeElement::BladeElement(double radius_inner, double radius_center, double rad
     this->flapping_polynomial = new double[flapping_polynomial_order];
     for (int i = 0; i < flapping_polynomial_order; i++) {
         this->flapping_polynomial[i] = 0;
+
         this->force = gsl_vector_calloc(3);
         this->force_from_left = gsl_vector_calloc(3);
         this->force_from_right = gsl_vector_calloc(3);
@@ -23,4 +24,6 @@ BladeElement::BladeElement(double radius_inner, double radius_center, double rad
         this->moment_from_left = gsl_vector_calloc(3);
         this->moment_from_right = gsl_vector_calloc(3);
     }
+
+
 }
