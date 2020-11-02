@@ -2,7 +2,14 @@
 // Created by tobias on 27.10.20.
 //
 #include "Blade.h"
+#include "../lib/matplotlib-cpp-master/matplotlibcpp.h"
 #include <stdio.h>
+
+#define _USE_MATH_DEFINES
+
+#include <cmath>
+
+namespace plt = matplotlibcpp;
 
 const int Blade::AEQUIDISTANT_DISCRETIZATION = 0x01;
 
@@ -50,7 +57,9 @@ int Blade::initNet(unsigned int numberOfElements, int discretizationMethod, gsl_
 
             break;
     }
-    printf("Blattelemente initialisiert.\n");
+    printf("Blattelemente initialisiert.\n Generiere Blattlinie...\n");
+    this->compute_blattlinie();
+    printf("Blattlinie generiert.\n");
 
     return 0;
 }
@@ -68,3 +77,40 @@ void Blade::print_blattlinie() {
 };
 
 Blade::Blade(double radius, double head_radius) : radius(radius), head_radius(head_radius) {}
+
+void Blade::compute_blattlinie() {
+    int n = this->bladeElements.size();
+    this->blattlinie_xy_accel = gsl_interp_accel_alloc();
+    this->blattlinie_xz_accel = gsl_interp_accel_alloc();
+    // xy-Ebene (Schwenken)
+    this->blattlinie_xy_spline = gsl_spline_alloc(gsl_interp_cspline, this->bladeElements.size());
+    gsl_spline_init(this->blattlinie_xy_spline, this->element_positions_x,
+                    this->element_positions_y, this->bladeElements.size());
+    // xz-Ebene (Schlagen)
+    this->blattlinie_xz_spline = gsl_spline_alloc(gsl_interp_cspline, this->bladeElements.size());
+    gsl_spline_init(this->blattlinie_xz_spline, this->element_positions_x,
+                    this->element_positions_z, this->bladeElements.size());
+}
+
+void Blade::plot_schlaglinie(double delta_x, char *filename) {
+    printf("Zeichne Schlaglinie...\n");
+    int number_of_elements = this->bladeElements.size();
+    double x_min = this->bladeElements.front().get_radius_center();
+    double x_max = this->bladeElements.back().get_radius_center();
+    int n = (int) ((x_max - x_min) / delta_x);
+    // Prepare data.
+    std::vector<double> x(0), y(0);
+    for (int i = 0; i < n; i++) {
+        double xi = i * delta_x + x_min;
+        x.push_back(xi);
+        y.push_back(gsl_spline_eval(this->blattlinie_xz_spline, xi, this->blattlinie_xz_accel));
+    }
+    plt::figure_size(1200, 780);
+    plt::title("Schlaglinie");
+    plt::xlim((int) floor(0),
+              (int) ceil(this->radius)); // This is a workaround since xlim does only take ints
+    plt::plot(x, y);
+    //plt::plot(this->element_positions_x, this->element_positions_y);
+    std::cout << "Saving result to " << filename << std::endl;;
+    plt::save(filename);
+}

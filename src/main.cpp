@@ -11,7 +11,8 @@ int main() {
     gsl_matrix_set(I, 0, 0, 1);
     gsl_matrix_set(I, 1, 1, 1);
     gsl_matrix_set(I, 2, 2, 1);
-    b->initNet(9, Blade::AEQUIDISTANT_DISCRETIZATION, I);
-    b->print_blattlinie();
+    b->initNet(10, Blade::AEQUIDISTANT_DISCRETIZATION, I);
+    //b->print_blattlinie();
+    b->plot_schlaglinie(0.1, "./Schlaglinie.png");
     return 0;
 }

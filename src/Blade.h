@@ -7,6 +7,7 @@
 
 #include <list>
 #include "BladeElement.h"
+#include <gsl/gsl_spline.h>
 
 class Blade {
 private:
@@ -16,6 +17,15 @@ private:
     double *element_positions_y;
     double *element_positions_z;
     std::list<BladeElement> bladeElements;
+
+    // interpolation of the Blattlinie
+    gsl_spline *blattlinie_xz_spline;
+    gsl_interp_accel *blattlinie_xz_accel;
+    gsl_spline *blattlinie_xy_spline;
+    gsl_interp_accel *blattlinie_xy_accel;
+
+    void compute_blattlinie();
+
 public:
     static const int AEQUIDISTANT_DISCRETIZATION;
 
@@ -25,6 +35,8 @@ public:
     Blade(double radius, double head_radius);
 
     int initNet(unsigned int numberOfElements, int discretizationMethod, gsl_matrix *I);
+
+    void plot_schlaglinie(double delta_x, char *filename);
 };
 
 

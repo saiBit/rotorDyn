@@ -27,3 +27,7 @@ BladeElement::BladeElement(double radius_inner, double radius_center, double rad
 
 
 }
+
+double BladeElement::get_radius_center() {
+    return this->radius_center;
+}

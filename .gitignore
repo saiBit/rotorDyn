@@ -31,3 +31,4 @@
 *.out
 *.app
 /bin/rotorDyn
+/lib/matplotlib-cpp-master/

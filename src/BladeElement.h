@@ -9,6 +9,8 @@
 
 class BladeElement {
 public:
+    double get_radius_center();
+
     BladeElement(double radius_inner, double radius_center, double radius_outer,
                  gsl_vector *translation,// Abstand von Mittelpunkt der t/4 Linie zwischen
             // diesem und vorherigen Element bzw. Mast

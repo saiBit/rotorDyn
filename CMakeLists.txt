@@ -15,3 +15,8 @@ add_executable(rotorDyn ${SOURCE_FILES})
 
 find_package(GSL REQUIRED)
 target_link_libraries(rotorDyn GSL::gsl)
+
+# PYTHON LIB
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+target_link_libraries(rotorDyn ${PYTHON_LIBRARIES})
