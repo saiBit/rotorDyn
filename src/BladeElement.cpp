@@ -6,10 +6,12 @@
 
 BladeElement::BladeElement(double radius_inner, double radius_center, double radius_outer,
                            gsl_vector *translation, unsigned int flapping_polynomial_order,
-                           gsl_matrix *I)
+                           double k_alpha, double k_beta, double k_gamma)
         : radius_inner(radius_inner), radius_center(radius_center), radius_outer(radius_outer),
           translation(translation), // translation = (u, v, w)^t bei radius_center
-          I(I)                      // Flächenträgheitsmoment um t/4-Linie
+          k_alpha(k_alpha),          // Steifigkeit Torsion
+          k_beta(k_beta),
+          k_gamma(k_gamma)
 {
     // We initialize the flapping polynomial as a straight line
     this->flapping_polynomial = new double[flapping_polynomial_order];

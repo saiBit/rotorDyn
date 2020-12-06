@@ -15,7 +15,7 @@ public:
                  gsl_vector *translation,// Abstand von Mittelpunkt der t/4 Linie zwischen
             // diesem und vorherigen Element bzw. Mast
                  unsigned int flapping_polynomial_order,
-                 gsl_matrix *I
+                 double k_alpha, double k_beta, double k_gamma
     );
 
 private:
@@ -33,7 +33,7 @@ private:
     gsl_vector *moment_from_left;
     gsl_vector *moment_from_right;
 
-    gsl_matrix *I;              // Flächenträgheitsmoment um t/4-Linie
+    double k_alpha, k_beta, k_gamma;
 };
 
 #endif //ROTORDYN_BLADEELEMENT_H
